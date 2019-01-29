@@ -28,7 +28,7 @@ class MapViewController: UIViewController
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    viewModel = MapViewModel()
+    viewModel = MapViewModel(view: self)
     searchViewTextField.delegate = self
     setViewStyle()
   }
@@ -109,6 +109,24 @@ extension MapViewController: UITextFieldDelegate
   {
     shrinkSearchViewAnim()
     viewModel.searcLocationRequested(input: textField.text ?? "")
+    textField.text = ""
     return textField.resignFirstResponder()
+  }
+}
+
+extension MapViewController: MapViewProtocol
+{
+  func zoomToLocation(coordinate: CLLocationCoordinate2D)
+  {
+      centerMapOnLocation(coordinate: coordinate)
+  }
+  
+  func centerMapOnLocation(coordinate: CLLocationCoordinate2D)
+  {
+    let regionRadius: CLLocationDistance = 1000
+    let coordinateRegion = MKCoordinateRegion(center: coordinate,
+                                              latitudinalMeters: regionRadius,
+                                              longitudinalMeters: regionRadius)
+    mapView.setRegion(coordinateRegion, animated: true)
   }
 }

@@ -7,20 +7,32 @@
 //
 
 import Foundation
+import MapKit
 
 class MapViewModel
 {
   private let coordinateSeparator: String = ";"
   
+  let geocoder: Geocoder
+  weak var view: MapViewProtocol?
+
+  init(view: MapViewProtocol)
+  {
+    self.view = view
+    geocoder = Geocoder()
+  }
+
   public func searcLocationRequested(input: String)
   {
     if isCoordinates(input: input)
     {
-      print(createCoordinatesFromInput(input))
+      let coor = createCoordinatesFromInput(input)
+      print(coor)
+      geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
     }
     else // must be name of location
     {
-
+      geocoder.getCoordinate(addressString: input, completitionHandler: placemarkLookUp)
     }
   }
 
@@ -42,5 +54,13 @@ class MapViewModel
     }
 
     return (lat: lat, lng: lng)
+  }
+  
+  private lazy var coordinateLookup: (CLPlacemark?) -> Void = { placemark in
+    // TODO: here I should do something
+  }
+  
+  private lazy var placemarkLookUp: (CLLocationCoordinate2D, NSError?) -> Void = { (coordinate, error) in
+    self.view?.zoomToLocation(coordinate: coordinate)
   }
 }
