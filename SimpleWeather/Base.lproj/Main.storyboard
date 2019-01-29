@@ -21,22 +21,78 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="51W-gX-Uhk">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WhL-nb-12T" userLabel="LeftSeparatorView">
+                                <rect key="frame" x="0.0" y="64" width="41.333333333333336" height="46"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-XE-ySX" userLabel="SearchView">
+                                <rect key="frame" x="41.333333333333343" y="64" width="331.33333333333326" height="46"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Cuv-Ne-UAt">
+                                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Iou-jm-ZGV"/>
+                                            <constraint firstAttribute="width" constant="30" id="Vc0-yD-2M4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wL2-Rf-Nyz">
+                                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                                        <connections>
+                                            <action selector="searchViewButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eax-qa-eap"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Cuv-Ne-UAt" secondAttribute="bottom" constant="8" id="1sc-te-YGF"/>
+                                    <constraint firstItem="wL2-Rf-Nyz" firstAttribute="leading" secondItem="Cuv-Ne-UAt" secondAttribute="leading" id="LcE-zz-ucS"/>
+                                    <constraint firstItem="wL2-Rf-Nyz" firstAttribute="top" secondItem="Cuv-Ne-UAt" secondAttribute="top" id="Ml8-PL-BBr"/>
+                                    <constraint firstItem="wL2-Rf-Nyz" firstAttribute="bottom" secondItem="Cuv-Ne-UAt" secondAttribute="bottom" id="XRA-mo-zWN"/>
+                                    <constraint firstItem="Cuv-Ne-UAt" firstAttribute="top" secondItem="ilh-XE-ySX" secondAttribute="top" constant="8" id="ZnT-ni-Uc3"/>
+                                    <constraint firstItem="wL2-Rf-Nyz" firstAttribute="trailing" secondItem="Cuv-Ne-UAt" secondAttribute="trailing" id="aLS-tx-I5Z"/>
+                                    <constraint firstItem="Cuv-Ne-UAt" firstAttribute="leading" secondItem="ilh-XE-ySX" secondAttribute="leading" constant="8" id="tTv-cz-q0d"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="enter location or corrdinates" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iCS-7T-MJO">
+                                <rect key="frame" x="87.333333333333343" y="78.666666666666671" width="285.33333333333326" height="17"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="iCS-7T-MJO" firstAttribute="centerY" secondItem="ilh-XE-ySX" secondAttribute="centerY" id="2s2-gg-pS3"/>
                             <constraint firstAttribute="bottom" secondItem="51W-gX-Uhk" secondAttribute="bottom" id="58h-FL-8Ej"/>
                             <constraint firstItem="51W-gX-Uhk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="717-YQ-v3V"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="51W-gX-Uhk" secondAttribute="trailing" id="8ti-UQ-WzL"/>
+                            <constraint firstItem="ilh-XE-ySX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="9br-hI-9kM"/>
+                            <constraint firstItem="WhL-nb-12T" firstAttribute="height" secondItem="ilh-XE-ySX" secondAttribute="height" id="JUh-kf-Gbe"/>
+                            <constraint firstItem="WhL-nb-12T" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.1" id="LcB-N8-vNT"/>
+                            <constraint firstItem="WhL-nb-12T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Npf-gy-1u9"/>
+                            <constraint firstItem="ilh-XE-ySX" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="Pds-DF-3MI"/>
+                            <constraint firstItem="ilh-XE-ySX" firstAttribute="leading" secondItem="WhL-nb-12T" secondAttribute="trailing" id="VK4-ET-HN0"/>
+                            <constraint firstItem="iCS-7T-MJO" firstAttribute="trailing" secondItem="ilh-XE-ySX" secondAttribute="trailing" id="h8d-H4-O7H"/>
+                            <constraint firstItem="WhL-nb-12T" firstAttribute="centerY" secondItem="ilh-XE-ySX" secondAttribute="centerY" id="rbv-IN-iKh"/>
                             <constraint firstItem="51W-gX-Uhk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vft-aT-vll"/>
+                            <constraint firstItem="iCS-7T-MJO" firstAttribute="leading" secondItem="ilh-XE-ySX" secondAttribute="leading" constant="46" id="yNm-7i-KPj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="51W-gX-Uhk" id="dwn-MH-D4s"/>
+                        <outlet property="searchView" destination="ilh-XE-ySX" id="Nhy-Bd-U3I"/>
+                        <outlet property="searchViewTextField" destination="iCS-7T-MJO" id="vEV-rm-bG5"/>
+                        <outlet property="searchViewWidthConstraint" destination="Pds-DF-3MI" id="G6w-bl-XoV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-347.82608695652175" y="5.3571428571428568"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="SearchIcon" width="21" height="22"/>
+    </resources>
 </document>
