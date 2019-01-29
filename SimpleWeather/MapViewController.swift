@@ -23,9 +23,13 @@ class MapViewController: UIViewController
 
   private var searchFieldIsExpanded: Bool = false
 
+  private var viewModel: MapViewModel!
+
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    viewModel = MapViewModel()
+    searchViewTextField.delegate = self
     setViewStyle()
   }
 
@@ -65,6 +69,8 @@ class MapViewController: UIViewController
   {
     if searchFieldIsExpanded
     {
+      viewModel.searcLocationRequested(input: searchViewTextField.text ?? "")
+      searchViewTextField.resignFirstResponder()
       shrinkSearchViewAnim()
     }
     else
@@ -81,6 +87,7 @@ class MapViewController: UIViewController
       self.view.layoutIfNeeded()
     }, completion: { _ in
       self.searchViewTextField.isHidden = false
+      self.searchViewTextField.becomeFirstResponder()
     })
   }
 
@@ -96,3 +103,12 @@ class MapViewController: UIViewController
   }
 }
 
+extension MapViewController: UITextFieldDelegate
+{
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool
+  {
+    shrinkSearchViewAnim()
+    viewModel.searcLocationRequested(input: textField.text ?? "")
+    return textField.resignFirstResponder()
+  }
+}
