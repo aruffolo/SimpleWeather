@@ -28,7 +28,11 @@ class MapViewModel
     {
       let coor = createCoordinatesFromInput(input)
       print(coor)
-      geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
+      
+      let coordinate = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lng)
+      view?.zoomToLocation(coordinate: coordinate)
+      // not uses, I leave just in case I would need location information based on the coordinate provided
+      //geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
     }
     else // must be name of location
     {

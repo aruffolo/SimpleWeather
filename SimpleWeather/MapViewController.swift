@@ -123,6 +123,7 @@ extension MapViewController: MapViewProtocol
   
   func centerMapOnLocation(coordinate: CLLocationCoordinate2D)
   {
+    guard CLLocationCoordinate2DIsValid(coordinate) else { return }
     let regionRadius: CLLocationDistance = 1000
     let coordinateRegion = MKCoordinateRegion(center: coordinate,
                                               latitudinalMeters: regionRadius,
