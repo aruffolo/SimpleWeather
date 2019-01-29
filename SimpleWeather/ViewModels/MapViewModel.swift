@@ -10,6 +10,8 @@ import Foundation
 
 class MapViewModel
 {
+  private let coordinateSeparator: String = ";"
+  
   public func searcLocationRequested(input: String)
   {
     if isCoordinates(input: input)
@@ -26,13 +28,13 @@ class MapViewModel
   // ';' as lat and lng separator
   private func isCoordinates(input: String) -> Bool
   {
-    let splitted = input.replacingOccurrences(of: " ", with: "").split(separator: ",")
+    let splitted = input.replacingOccurrences(of: " ", with: "").split(separator: Character(coordinateSeparator))
     return splitted.count == 2 && Double(splitted[0]) != nil && Double(splitted[1]) != nil
   }
 
   private func createCoordinatesFromInput(_ input: String) -> (lat: Double, lng: Double)
   {
-    let splitted = input.replacingOccurrences(of: " ", with: "").split(separator: ";")
+    let splitted = input.replacingOccurrences(of: " ", with: "").split(separator: Character(coordinateSeparator))
     guard splitted.count == 2, let lat = Double(splitted[0]), let lng = Double(splitted[1])
     else
     {

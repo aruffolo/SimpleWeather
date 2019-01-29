@@ -17,7 +17,7 @@ class MapViewController: UIViewController
   @IBOutlet weak var searchViewWidthConstraint: NSLayoutConstraint!
 
   private let searchButtonSide: CGFloat = 30
-  private let searchButtonLeading: CGFloat = 18
+  private let searchButtonWidthMargin: CGFloat = 18
   private var compactMultiplier: CGFloat = 0.0
   private var expandedMultiplier: CGFloat = 0.0
 
@@ -55,7 +55,7 @@ class MapViewController: UIViewController
   private func setMultipliersForSearchViewWidth()
   {
     let width = UIScreen.main.bounds.width
-    compactMultiplier =  (searchButtonSide + searchButtonLeading) / width
+    compactMultiplier =  (searchButtonSide + searchButtonWidthMargin) / width
     expandedMultiplier = searchViewWidthConstraint.multiplier
   }
 
