@@ -30,6 +30,9 @@ class MapViewModel
       print(coor)
       
       let coordinate = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lng)
+      
+      tryToUseApi(coordinate: coordinate)
+
       view?.zoomToLocation(coordinate: coordinate)
       // not uses, I leave just in case I would need location information based on the coordinate provided
       //geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
@@ -66,5 +69,28 @@ class MapViewModel
   
   private lazy var placemarkLookUp: (CLLocationCoordinate2D, NSError?) -> Void = { (coordinate, error) in
     self.view?.zoomToLocation(coordinate: coordinate)
+  }
+
+  private func tryToUseApi(coordinate: CLLocationCoordinate2D)
+  {
+    ApiClient
+      .currentWeather(lat: String(coordinate.latitude),
+                      lng: String(coordinate.longitude),
+                      completion: { result in
+
+                        if result.isSuccess, let weather = result.value
+                        {
+                          print(weather)
+                        }
+      })
+//    ApiClient
+//      .currentWeather(location: "London,uk",
+//                      completion: { result in
+//
+//                        if result.isSuccess, let weather = result.value
+//                        {
+//                          print(weather)
+//                        }
+//      })
   }
 }

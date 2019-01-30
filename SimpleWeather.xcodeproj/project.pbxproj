@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E3D8058220129830062A52E /* ApiRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D8057220129830062A52E /* ApiRouter.swift */; };
+		0E3D805B220135450062A52E /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D805A220135450062A52E /* CurrentWeather.swift */; };
+		0E3D805D2201362A0062A52E /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D805C2201362A0062A52E /* ApiClient.swift */; };
+		0E3D805F22013A370062A52E /* JSONDecoder+decodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D805E22013A370062A52E /* JSONDecoder+decodeResponse.swift */; };
 		0EAEAF4821FF791000660B4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAEAF4721FF791000660B4C /* AppDelegate.swift */; };
 		0EAEAF4A21FF791000660B4C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAEAF4921FF791000660B4C /* MapViewController.swift */; };
 		0EAEAF4D21FF791000660B4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EAEAF4B21FF791000660B4C /* Main.storyboard */; };
@@ -20,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E3D8057220129830062A52E /* ApiRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRouter.swift; sourceTree = "<group>"; };
+		0E3D805A220135450062A52E /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		0E3D805C2201362A0062A52E /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		0E3D805E22013A370062A52E /* JSONDecoder+decodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+decodeResponse.swift"; sourceTree = "<group>"; };
 		0EAEAF4421FF791000660B4C /* SimpleWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EAEAF4721FF791000660B4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EAEAF4921FF791000660B4C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -48,6 +56,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E3D80562201237A0062A52E /* Servicies */ = {
+			isa = PBXGroup;
+			children = (
+				0E3D805922012FA90062A52E /* DTOs */,
+				0E3D8057220129830062A52E /* ApiRouter.swift */,
+				0E3D805C2201362A0062A52E /* ApiClient.swift */,
+			);
+			path = Servicies;
+			sourceTree = "<group>";
+		};
+		0E3D805922012FA90062A52E /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				0E3D805A220135450062A52E /* CurrentWeather.swift */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
 		0EAEAF3B21FF791000660B4C = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +95,7 @@
 		0EAEAF4621FF791000660B4C /* SimpleWeather */ = {
 			isa = PBXGroup;
 			children = (
+				0E3D80562201237A0062A52E /* Servicies */,
 				7D3812AD220081820020D4C6 /* Utility */,
 				0EAEAF5A21FFD18600660B4C /* ViewModels */,
 				0EAEAF5921FFD17600660B4C /* Extensions */,
@@ -86,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				0EAEAF5B21FFE04D00660B4C /* NSLayoutConstraint+ChangeMultiplier.swift */,
+				0E3D805E22013A370062A52E /* JSONDecoder+decodeResponse.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -236,12 +264,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E3D805F22013A370062A52E /* JSONDecoder+decodeResponse.swift in Sources */,
 				0EAEAF4A21FF791000660B4C /* MapViewController.swift in Sources */,
 				7D3812AF220081AA0020D4C6 /* Geocoder.swift in Sources */,
+				0E3D805D2201362A0062A52E /* ApiClient.swift in Sources */,
+				0E3D805B220135450062A52E /* CurrentWeather.swift in Sources */,
 				0EAEAF5C21FFE04D00660B4C /* NSLayoutConstraint+ChangeMultiplier.swift in Sources */,
 				7D3812AC22007F6B0020D4C6 /* MapViewProtocol.swift in Sources */,
 				0EAEAF4821FF791000660B4C /* AppDelegate.swift in Sources */,
 				0EAEAF5E21FFEDA600660B4C /* MapViewModel.swift in Sources */,
+				0E3D8058220129830062A52E /* ApiRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
