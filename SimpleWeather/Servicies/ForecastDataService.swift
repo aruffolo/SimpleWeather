@@ -27,6 +27,10 @@ public struct ForecastDataService: ForecastDataServiceProtocol
       {
         completition(self.createForecastViewData(weather: weather))
       }
+      else
+      {
+        completition(nil)
+      }
     })
   }
   
@@ -42,17 +46,21 @@ public struct ForecastDataService: ForecastDataServiceProtocol
                         {
                           completition(self.createForecastViewData(weather: weather))
                         }
+                        else
+                        {
+                          completition(nil)
+                        }
       })
   }
   
-  private func createForecastViewData(weather: CurrentWeather) -> ForecastViewData?
+  private func createForecastViewData(weather: CurrentWeather?) -> ForecastViewData?
   {
-    guard let descr = weather.weather.first?.description else { return nil }
-    return ForecastViewData(city: weather.name,
+    guard let weath = weather, let descr = weather?.weather.first?.description else { return nil }
+    return ForecastViewData(city: weath.name,
                             forecastDescription: descr,
-                            temperature: weather.main.temp,
-                            minTemperature: weather.main.tempMin,
-                            maxTemperature: weather.main.tempMax,
-                            humidity: weather.main.humidity)
+                            temperature: weath.main.temp,
+                            minTemperature: weath.main.tempMin,
+                            maxTemperature: weath.main.tempMax,
+                            humidity: weath.main.humidity)
   }
 }

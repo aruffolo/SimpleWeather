@@ -52,6 +52,7 @@ class MapViewController: UIViewController
 
   private func setInitialValues()
   {
+    forecastView.isHidden = true
     let minus = "-"
     cityLabel.text = minus
     forecastLabel.text = minus
@@ -162,6 +163,12 @@ extension MapViewController: MapViewProtocol
   
   func fillForecastData(data: ForecastViewData)
   {
+    fillLabels(data: data)
+    animateForcastViewFadeIn()
+  }
+
+  private func fillLabels(data: ForecastViewData)
+  {
     let centrigades = "o"
     cityLabel.text = data.city
     forecastLabel.text = data.forecastDescription
@@ -190,6 +197,13 @@ extension MapViewController: MapViewProtocol
     humidityLabel.text = data.humidity + " %"
   }
 
+  private func animateForcastViewFadeIn()
+  {
+    UIView.animate(withDuration: 0.4, animations: {
+      self.forecastView.isHidden = false
+    })
+  }
+
   private func createSuperScriptString(font: UIFont,
                                        content: String,
                                        subscriptChar: String,
@@ -205,5 +219,10 @@ extension MapViewController: MapViewProtocol
     }
 
     return attrString
+  }
+
+  func hideForecastView()
+  {
+    forecastView.isHidden = true
   }
 }

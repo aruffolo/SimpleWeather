@@ -36,7 +36,12 @@ class MapViewModel
       view?.zoomToLocation(coordinate: coordinate)
       
       forecastDataService.fetchForecastUsingCoordinate(coordinate: coordinate, completition: { data in
-        guard let d = data else { return }
+        guard let d = data
+          else
+        {
+          self.view?.hideForecastView()
+          return
+        }
         print(d)
         self.view?.fillForecastData(data: d)
       })
@@ -49,7 +54,12 @@ class MapViewModel
       geocoder.getCoordinate(addressString: input, completitionHandler: placemarkLookUp)
       
       forecastDataService.fetchForecastUsingLocation(input, completition: { data in
-        guard let d = data else { return }
+        guard let d = data
+          else
+        {
+          self.view?.hideForecastView()
+          return
+        }
         print(d)
         self.view?.fillForecastData(data: d)
       })
