@@ -38,11 +38,27 @@ class MapViewController: UIViewController
     
     searchViewTextField.delegate = self
     setViewStyle()
+    setInitialValues()
   }
 
   private func setViewStyle()
   {
     searchView.layer.cornerRadius = searchView.frame.height / 2
+    searchView.layer.shadowOffset = .zero
+    searchView.layer.shadowOpacity = 0.4
+    searchView.layer.shadowRadius = 10
+    searchView.layer.shadowColor = UIColor.black.cgColor
+  }
+
+  private func setInitialValues()
+  {
+    let minus = "-"
+    cityLabel.text = minus
+    forecastLabel.text = minus
+    temperatureLabel.text = minus
+    minTemperatureLabel.text = minus
+    maxTemperatureLabel.text = minus
+    humidityLabel.text = minus
   }
 
   override func viewWillAppear(_ animated: Bool)
@@ -76,7 +92,10 @@ class MapViewController: UIViewController
   {
     if searchFieldIsExpanded
     {
-      viewModel.searcLocationRequested(input: searchViewTextField.text ?? "")
+      if let content = searchViewTextField.text, !content.isEmpty
+      {
+        viewModel.searcLocationRequested(input: content)
+      }
       searchViewTextField.resignFirstResponder()
       shrinkSearchViewAnim()
     }
@@ -115,8 +134,11 @@ extension MapViewController: UITextFieldDelegate
   func textFieldShouldReturn(_ textField: UITextField) -> Bool
   {
     shrinkSearchViewAnim()
-    viewModel.searcLocationRequested(input: textField.text ?? "")
-    textField.text = ""
+    if let content = textField.text, !content.isEmpty
+    {
+      viewModel.searcLocationRequested(input: content)
+      textField.text = ""
+    }
     return textField.resignFirstResponder()
   }
 }
@@ -140,11 +162,48 @@ extension MapViewController: MapViewProtocol
   
   func fillForecastData(data: ForecastViewData)
   {
+    let centrigades = "o"
     cityLabel.text = data.city
     forecastLabel.text = data.forecastDescription
-    temperatureLabel.text = data.temperature
-    minTemperatureLabel.text = data.minTemperature
-    maxTemperatureLabel.text = data.maxTemperature
-    humidityLabel.text = data.humidity
+
+    let temperature = createSuperScriptString(font: temperatureLabel.font,
+                                              content: data.temperature + centrigades,
+                                              subscriptChar: centrigades,
+                                              baselineOffset: 50,
+                                              subscriptSize: 20)
+    temperatureLabel.attributedText = temperature
+
+
+    let minTemperature = createSuperScriptString(font: minTemperatureLabel.font,
+                                                 content: data.minTemperature + centrigades,
+                                                 subscriptChar: centrigades,
+                                                 baselineOffset: 10,
+                                                 subscriptSize: 10)
+    minTemperatureLabel.attributedText = minTemperature
+
+    let maxTemperature = createSuperScriptString(font: maxTemperatureLabel.font,
+                                                 content: data.maxTemperature + centrigades,
+                                                 subscriptChar: centrigades,
+                                                 baselineOffset: 10,
+                                                 subscriptSize: 10)
+    maxTemperatureLabel.attributedText = maxTemperature
+    humidityLabel.text = data.humidity + " %"
+  }
+
+  private func createSuperScriptString(font: UIFont,
+                                       content: String,
+                                       subscriptChar: String,
+                                       baselineOffset: CGFloat,
+                                       subscriptSize: CGFloat) -> NSAttributedString
+  {
+    let fontSuper = font.withSize(subscriptSize)
+    let attrString: NSMutableAttributedString = NSMutableAttributedString(string: content, attributes: [.font: font])
+    if let range = content.range(of: subscriptChar)
+    {
+      let nsRange = NSRange(range, in: content)
+      attrString.setAttributes([.font: fontSuper, .baselineOffset: baselineOffset], range: nsRange)
+    }
+
+    return attrString
   }
 }

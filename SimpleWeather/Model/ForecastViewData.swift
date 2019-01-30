@@ -14,4 +14,19 @@ public struct ForecastViewData
   let minTemperature: String
   let maxTemperature: String
   let humidity: String
+
+  init(city: String,
+       forecastDescription: String,
+       temperature: Double,
+       minTemperature: Double,
+       maxTemperature: Double,
+       humidity: Int)
+  {
+    self.city = city
+    self.forecastDescription = forecastDescription
+    self.temperature = String(Int(temperature.rounded()))
+    self.minTemperature = String(Int(minTemperature.rounded()))
+    self.maxTemperature = String(Int(maxTemperature.rounded()))
+    self.humidity = String(humidity)
+  }
 }

@@ -48,11 +48,11 @@ public struct ForecastDataService: ForecastDataServiceProtocol
   private func createForecastViewData(weather: CurrentWeather) -> ForecastViewData?
   {
     guard let descr = weather.weather.first?.description else { return nil }
-    return  ForecastViewData(city: weather.name,
-                             forecastDescription: descr,
-                             temperature: String(weather.main.temp),
-                             minTemperature: String(weather.main.tempMin),
-                             maxTemperature: String(weather.main.tempMax),
-                             humidity: String(weather.main.humidity))
+    return ForecastViewData(city: weather.name,
+                            forecastDescription: descr,
+                            temperature: weather.main.temp,
+                            minTemperature: weather.main.tempMin,
+                            maxTemperature: weather.main.tempMax,
+                            humidity: weather.main.humidity)
   }
 }
