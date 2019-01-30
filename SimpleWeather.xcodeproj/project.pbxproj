@@ -21,6 +21,7 @@
 		39AA34F910C2C37E8A6EF214 /* Pods_SimpleWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2170B00FEF7EE678D64B667 /* Pods_SimpleWeather.framework */; };
 		7D3812AC22007F6B0020D4C6 /* MapViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3812AB22007F6B0020D4C6 /* MapViewProtocol.swift */; };
 		7D3812AF220081AA0020D4C6 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3812AE220081AA0020D4C6 /* Geocoder.swift */; };
+		7DDFAAD12201AD6000BF166A /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAAD02201AD6000BF166A /* APIConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		0EAEAF5D21FFEDA600660B4C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		7D3812AB22007F6B0020D4C6 /* MapViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProtocol.swift; sourceTree = "<group>"; };
 		7D3812AE220081AA0020D4C6 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
+		7DDFAAD02201AD6000BF166A /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		82A62882BB0C38686057ED12 /* Pods-SimpleWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWeather/Pods-SimpleWeather.release.xcconfig"; sourceTree = "<group>"; };
 		A2170B00FEF7EE678D64B667 /* Pods_SimpleWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B32B5666D37BD793B62861 /* Pods-SimpleWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWeather/Pods-SimpleWeather.debug.xcconfig"; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				0E3D805922012FA90062A52E /* DTOs */,
 				0E3D8057220129830062A52E /* ApiRouter.swift */,
 				0E3D805C2201362A0062A52E /* ApiClient.swift */,
+				7DDFAAD02201AD6000BF166A /* APIConstants.swift */,
 			);
 			path = Servicies;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E3D805F22013A370062A52E /* JSONDecoder+decodeResponse.swift in Sources */,
+				7DDFAAD12201AD6000BF166A /* APIConstants.swift in Sources */,
 				0EAEAF4A21FF791000660B4C /* MapViewController.swift in Sources */,
 				7D3812AF220081AA0020D4C6 /* Geocoder.swift in Sources */,
 				0E3D805D2201362A0062A52E /* ApiClient.swift in Sources */,

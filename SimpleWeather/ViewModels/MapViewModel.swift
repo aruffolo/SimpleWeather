@@ -83,14 +83,5 @@ class MapViewModel
                           print(weather)
                         }
       })
-//    ApiClient
-//      .currentWeather(location: "London,uk",
-//                      completion: { result in
-//
-//                        if result.isSuccess, let weather = result.value
-//                        {
-//                          print(weather)
-//                        }
-//      })
   }
 }

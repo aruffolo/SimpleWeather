@@ -9,43 +9,18 @@
 import Foundation
 import Alamofire
 
+enum Constants
+{
+  static let baseURLPath = "https://api.openweathermap.org/data/2.5"
+  static let apiKey = "b15366113cdfdf40d6e24896299fe64a"
+  static let measureUnitValue = "metric"
+}
+
 public enum ApiRouter: URLRequestConvertible
 {
-  enum Constants
-  {
-    static let baseURLPath = "http://api.openweathermap.org/data/2.5"
-    static let apiKey = "b15366113cdfdf40d6e24896299fe64a"
-    static let measureUnitValue = "metric"
-  }
-
-  struct APIParameterKey
-  {
-    static let lat = "lat"
-    static let lng = "lon"
-
-    static let q = "q"
-
-    static let appId = "APPID"
-
-    static let measureUnit = "units"
-  }
-
-  enum HTTPHeaderField: String
-  {
-    case authentication = "Authorization"
-    case contentType = "Content-Type"
-    case acceptType = "Accept"
-    case acceptEncoding = "Accept-Encoding"
-  }
-
-  enum ContentType: String
-  {
-    case json = "application/json"
-  }
-
   case weatherCoordinate(lat: String, lng: String)
   case weatherName(name: String)
-
+  
   var method: HTTPMethod
   {
     switch self
@@ -55,7 +30,7 @@ public enum ApiRouter: URLRequestConvertible
       return .get
     }
   }
-
+  
   var path: String
   {
     switch self
@@ -65,7 +40,7 @@ public enum ApiRouter: URLRequestConvertible
       return "/weather"
     }
   }
-
+  
   var parameters: Parameters? //[String: Any]
   {
     switch self
@@ -76,34 +51,50 @@ public enum ApiRouter: URLRequestConvertible
       return [APIParameterKey.q: name, APIParameterKey.appId: Constants.apiKey, APIParameterKey.measureUnit: Constants.measureUnitValue]
     }
   }
-
+  
+  var encoding: ParameterEncoding
+  {
+    switch method
+    {
+    case .get:
+      return URLEncoding.default
+    default:
+      return JSONEncoding.default
+    }
+  }
+  
   public func asURLRequest() throws -> URLRequest
   {
     let url = try Constants.baseURLPath.asURL()
     var urlRequest = URLRequest(url: url.appendingPathComponent(path))
-
+    
     // HTTP Method
     urlRequest.httpMethod = method.rawValue
-
+    
     // Common Headers
-    //urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
     urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-
-    print(urlRequest.url!)
-
-    if let parameters = parameters
+    
+    if method == .post
     {
-      do
+      if let parameters = parameters
       {
-        urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        print(NSString(data: (urlRequest.httpBody)!, encoding: String.Encoding.utf8.rawValue)!)
+        do
+        {
+          urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+          print(NSString(data: (urlRequest.httpBody)!, encoding: String.Encoding.utf8.rawValue)!)
+        }
+        catch
+        {
+          throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
+        }
       }
-      catch
-      {
-        throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
-      }
+      return urlRequest
     }
-
-    return urlRequest
+    else
+    {
+      let finalRerquest = try encoding.encode(urlRequest, with: parameters)
+      print(finalRerquest.url!.absoluteString)
+      return finalRerquest
+    }
   }
 }
