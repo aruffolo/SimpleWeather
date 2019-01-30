@@ -15,10 +15,12 @@ class MapViewModel
   
   let geocoder: Geocoder
   weak var view: MapViewProtocol?
+  let forecastDataService: ForecastDataServiceProtocol
 
-  init(view: MapViewProtocol)
+  init(view: MapViewProtocol, forecastDataService: ForecastDataServiceProtocol)
   {
     self.view = view
+    self.forecastDataService = forecastDataService
     geocoder = Geocoder()
   }
 
@@ -30,16 +32,27 @@ class MapViewModel
       print(coor)
       
       let coordinate = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lng)
-      
-      tryToUseApi(coordinate: coordinate)
 
       view?.zoomToLocation(coordinate: coordinate)
+      
+      forecastDataService.fetchForecastUsingCoordinate(coordinate: coordinate, completition: { data in
+        guard let d = data else { return }
+        print(d)
+        self.view?.fillForecastData(data: d)
+      })
+      
       // not uses, I leave just in case I would need location information based on the coordinate provided
       //geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
     }
     else // must be name of location
     {
       geocoder.getCoordinate(addressString: input, completitionHandler: placemarkLookUp)
+      
+      forecastDataService.fetchForecastUsingLocation(input, completition: { data in
+        guard let d = data else { return }
+        print(d)
+        self.view?.fillForecastData(data: d)
+      })
     }
   }
 
@@ -69,19 +82,5 @@ class MapViewModel
   
   private lazy var placemarkLookUp: (CLLocationCoordinate2D, NSError?) -> Void = { (coordinate, error) in
     self.view?.zoomToLocation(coordinate: coordinate)
-  }
-
-  private func tryToUseApi(coordinate: CLLocationCoordinate2D)
-  {
-    ApiClient
-      .currentWeather(lat: String(coordinate.latitude),
-                      lng: String(coordinate.longitude),
-                      completion: { result in
-
-                        if result.isSuccess, let weather = result.value
-                        {
-                          print(weather)
-                        }
-      })
   }
 }

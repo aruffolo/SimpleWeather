@@ -22,6 +22,9 @@
 		7D3812AC22007F6B0020D4C6 /* MapViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3812AB22007F6B0020D4C6 /* MapViewProtocol.swift */; };
 		7D3812AF220081AA0020D4C6 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3812AE220081AA0020D4C6 /* Geocoder.swift */; };
 		7DDFAAD12201AD6000BF166A /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAAD02201AD6000BF166A /* APIConstants.swift */; };
+		7DDFAAD32201D1B400BF166A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAAD22201D1B400BF166A /* AppCoordinator.swift */; };
+		7DDFAAD62201D75800BF166A /* ForecastViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAAD52201D75800BF166A /* ForecastViewData.swift */; };
+		7DDFAAD82201D8D200BF166A /* ForecastDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAAD72201D8D200BF166A /* ForecastDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 		7D3812AB22007F6B0020D4C6 /* MapViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProtocol.swift; sourceTree = "<group>"; };
 		7D3812AE220081AA0020D4C6 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
 		7DDFAAD02201AD6000BF166A /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		7DDFAAD22201D1B400BF166A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		7DDFAAD52201D75800BF166A /* ForecastViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewData.swift; sourceTree = "<group>"; };
+		7DDFAAD72201D8D200BF166A /* ForecastDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataService.swift; sourceTree = "<group>"; };
 		82A62882BB0C38686057ED12 /* Pods-SimpleWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWeather/Pods-SimpleWeather.release.xcconfig"; sourceTree = "<group>"; };
 		A2170B00FEF7EE678D64B667 /* Pods_SimpleWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B32B5666D37BD793B62861 /* Pods-SimpleWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWeather/Pods-SimpleWeather.debug.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +71,7 @@
 				0E3D8057220129830062A52E /* ApiRouter.swift */,
 				0E3D805C2201362A0062A52E /* ApiClient.swift */,
 				7DDFAAD02201AD6000BF166A /* APIConstants.swift */,
+				7DDFAAD72201D8D200BF166A /* ForecastDataService.swift */,
 			);
 			path = Servicies;
 			sourceTree = "<group>";
@@ -98,6 +105,7 @@
 		0EAEAF4621FF791000660B4C /* SimpleWeather */ = {
 			isa = PBXGroup;
 			children = (
+				7DDFAAD42201D71900BF166A /* Model */,
 				0E3D80562201237A0062A52E /* Servicies */,
 				7D3812AD220081820020D4C6 /* Utility */,
 				0EAEAF5A21FFD18600660B4C /* ViewModels */,
@@ -108,6 +116,7 @@
 				0EAEAF4E21FF791500660B4C /* Assets.xcassets */,
 				0EAEAF5021FF791500660B4C /* LaunchScreen.storyboard */,
 				0EAEAF5321FF791500660B4C /* Info.plist */,
+				7DDFAAD22201D1B400BF166A /* AppCoordinator.swift */,
 			);
 			path = SimpleWeather;
 			sourceTree = "<group>";
@@ -144,6 +153,14 @@
 				7D3812AE220081AA0020D4C6 /* Geocoder.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		7DDFAAD42201D71900BF166A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7DDFAAD52201D75800BF166A /* ForecastViewData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		848D02AE304525F4F523BD80 /* Pods */ = {
@@ -267,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DDFAAD32201D1B400BF166A /* AppCoordinator.swift in Sources */,
 				0E3D805F22013A370062A52E /* JSONDecoder+decodeResponse.swift in Sources */,
 				7DDFAAD12201AD6000BF166A /* APIConstants.swift in Sources */,
 				0EAEAF4A21FF791000660B4C /* MapViewController.swift in Sources */,
@@ -276,7 +294,9 @@
 				0EAEAF5C21FFE04D00660B4C /* NSLayoutConstraint+ChangeMultiplier.swift in Sources */,
 				7D3812AC22007F6B0020D4C6 /* MapViewProtocol.swift in Sources */,
 				0EAEAF4821FF791000660B4C /* AppDelegate.swift in Sources */,
+				7DDFAAD62201D75800BF166A /* ForecastViewData.swift in Sources */,
 				0EAEAF5E21FFEDA600660B4C /* MapViewModel.swift in Sources */,
+				7DDFAAD82201D8D200BF166A /* ForecastDataService.swift in Sources */,
 				0E3D8058220129830062A52E /* ApiRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

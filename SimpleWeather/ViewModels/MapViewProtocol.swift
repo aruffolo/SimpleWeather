@@ -12,4 +12,5 @@ import MapKit
 protocol MapViewProtocol: class
 {
   func zoomToLocation(coordinate: CLLocationCoordinate2D)
+  func fillForecastData(data: ForecastViewData)
 }

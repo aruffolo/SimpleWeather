@@ -15,7 +15,14 @@ class MapViewController: UIViewController
   @IBOutlet weak var searchView: UIView!
   @IBOutlet weak var searchViewTextField: UITextField!
   @IBOutlet weak var searchViewWidthConstraint: NSLayoutConstraint!
-
+  @IBOutlet weak var forecastView: UIView!
+  @IBOutlet weak var cityLabel: UILabel!
+  @IBOutlet weak var forecastLabel: UILabel!
+  @IBOutlet weak var temperatureLabel: UILabel!
+  @IBOutlet weak var humidityLabel: UILabel!
+  @IBOutlet weak var minTemperatureLabel: UILabel!
+  @IBOutlet weak var maxTemperatureLabel: UILabel!
+  
   private let searchButtonSide: CGFloat = 30
   private let searchButtonWidthMargin: CGFloat = 18
   private var compactMultiplier: CGFloat = 0.0
@@ -23,12 +30,12 @@ class MapViewController: UIViewController
 
   private var searchFieldIsExpanded: Bool = false
 
-  private var viewModel: MapViewModel!
+  public var viewModel: MapViewModel!
 
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    viewModel = MapViewModel(view: self)
+    
     searchViewTextField.delegate = self
     setViewStyle()
   }
@@ -129,5 +136,15 @@ extension MapViewController: MapViewProtocol
                                               latitudinalMeters: regionRadius,
                                               longitudinalMeters: regionRadius)
     mapView.setRegion(coordinateRegion, animated: true)
+  }
+  
+  func fillForecastData(data: ForecastViewData)
+  {
+    cityLabel.text = data.city
+    forecastLabel.text = data.forecastDescription
+    temperatureLabel.text = data.temperature
+    minTemperatureLabel.text = data.minTemperature
+    maxTemperatureLabel.text = data.maxTemperature
+    humidityLabel.text = data.humidity
   }
 }

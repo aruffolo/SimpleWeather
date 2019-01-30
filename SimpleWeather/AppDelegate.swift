@@ -13,9 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
+  var coordinator: AppCordinator?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
+  {
+    guard let mapController = window?.rootViewController as? MapViewController
+      else
+    { fatalError("Root controller must be the map controller") }
+    
+    coordinator = AppCordinator(mapController: mapController)
+    coordinator?.configureMapController()
+
     return true
   }
 
