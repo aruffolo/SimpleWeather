@@ -43,6 +43,8 @@
 	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Location is needed to check weather</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is needed to check weather</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

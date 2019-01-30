@@ -29,14 +29,14 @@ struct CurrentWeather: Codable {
   let base: String
   let main: Main
   let visibility: Int
-  let wind: Wind
+  let wind: Wind?
   let rain: Rain?
-  let clouds: Clouds
-  let dt: Int
-  let sys: Sys
-  let id: Int
+  let clouds: Clouds?
+  let dt: Int?
+  let sys: Sys?
+  let id: Int?
   let name: String
-  let cod: Int
+  let cod: Int?
 }
 
 struct Clouds: Codable {
@@ -75,13 +75,13 @@ struct Sys: Codable {
 }
 
 struct Weather: Codable {
-  let id: Int
+  let id: Int?
   let main, description, icon: String
 }
 
 struct Wind: Codable {
-  let speed: Double
-  let deg: Int
+  let speed: Double?
+  let deg: Int?
 }
 
 func newJSONDecoder() -> JSONDecoder {

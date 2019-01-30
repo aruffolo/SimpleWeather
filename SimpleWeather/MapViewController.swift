@@ -37,8 +37,12 @@ class MapViewController: UIViewController
     super.viewDidLoad()
     
     searchViewTextField.delegate = self
+    mapView.showsUserLocation = true
+    
     setViewStyle()
     setInitialValues()
+
+    viewModel.viewIsReady()
   }
 
   private func setViewStyle()

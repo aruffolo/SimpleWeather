@@ -9,19 +9,27 @@
 import Foundation
 import MapKit
 
-class MapViewModel
+class MapViewModel: NSObject
 {
-  private let coordinateSeparator: String = ";"
+  private let coordinateSeparator: String = ","
   
-  let geocoder: Geocoder
-  weak var view: MapViewProtocol?
-  let forecastDataService: ForecastDataServiceProtocol
+  private let geocoder: Geocoder
+  let manager = CLLocationManager()
+  private weak var view: MapViewProtocol?
+  private let forecastDataService: ForecastDataServiceProtocol
 
   init(view: MapViewProtocol, forecastDataService: ForecastDataServiceProtocol)
   {
     self.view = view
     self.forecastDataService = forecastDataService
     geocoder = Geocoder()
+  }
+
+  public func viewIsReady()
+  {
+    manager.delegate = self
+    manager.requestWhenInUseAuthorization()
+    manager.requestLocation()
   }
 
   public func searcLocationRequested(input: String)
@@ -34,36 +42,43 @@ class MapViewModel
       let coordinate = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lng)
 
       view?.zoomToLocation(coordinate: coordinate)
-      
-      forecastDataService.fetchForecastUsingCoordinate(coordinate: coordinate, completition: { data in
-        guard let d = data
-          else
-        {
-          self.view?.hideForecastView()
-          return
-        }
-        print(d)
-        self.view?.fillForecastData(data: d)
-      })
-      
+      fetchForecastUsingCoordinate(coordinate)
       // not uses, I leave just in case I would need location information based on the coordinate provided
       //geocoder.reverseGeocode(lat: coor.lat, lng: coor.lng, completitionHandler: coordinateLookup)
     }
     else // must be name of location
     {
       geocoder.getCoordinate(addressString: input, completitionHandler: placemarkLookUp)
-      
-      forecastDataService.fetchForecastUsingLocation(input, completition: { data in
-        guard let d = data
-          else
-        {
-          self.view?.hideForecastView()
-          return
-        }
-        print(d)
-        self.view?.fillForecastData(data: d)
-      })
+      fetchForecastUsingLocation(input)
     }
+  }
+
+  private func fetchForecastUsingCoordinate(_ coordinate: CLLocationCoordinate2D)
+  {
+    forecastDataService.fetchForecastUsingCoordinate(coordinate: coordinate, completition: { data in
+      guard let d = data
+        else
+      {
+        self.view?.hideForecastView()
+        return
+      }
+      print(d)
+      self.view?.fillForecastData(data: d)
+    })
+  }
+
+  private func fetchForecastUsingLocation(_ location: String)
+  {
+    forecastDataService.fetchForecastUsingLocation(location, completition: { data in
+      guard let d = data
+        else
+      {
+        self.view?.hideForecastView()
+        return
+      }
+      print(d)
+      self.view?.fillForecastData(data: d)
+    })
   }
 
   // Here I suppose that coordinate input is valid only if corrdinate numbers have '.' as decimal separator and
@@ -92,5 +107,22 @@ class MapViewModel
   
   private lazy var placemarkLookUp: (CLLocationCoordinate2D, NSError?) -> Void = { (coordinate, error) in
     self.view?.zoomToLocation(coordinate: coordinate)
+  }
+}
+
+extension MapViewModel: CLLocationManagerDelegate
+{
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+  {
+    if let location = locations.first
+    {
+      print("Found user's location: \(location)")
+      view?.zoomToLocation(coordinate: location.coordinate)
+      fetchForecastUsingCoordinate(location.coordinate)
+    }
+  }
+
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("Failed to find user's location: \(error.localizedDescription)")
   }
 }
