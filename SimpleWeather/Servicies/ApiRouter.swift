@@ -41,7 +41,7 @@ public enum ApiRouter: URLRequestConvertible
     }
   }
   
-  var parameters: Parameters? //[String: Any]
+  var parameters: Parameters? 
   {
     switch self
     {
@@ -81,7 +81,6 @@ public enum ApiRouter: URLRequestConvertible
         do
         {
           urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-          print(NSString(data: (urlRequest.httpBody)!, encoding: String.Encoding.utf8.rawValue)!)
         }
         catch
         {
@@ -93,7 +92,7 @@ public enum ApiRouter: URLRequestConvertible
     else
     {
       let finalRerquest = try encoding.encode(urlRequest, with: parameters)
-      print(finalRerquest.url!.absoluteString)
+      print("GET request url\n: \(String(describing: finalRerquest.url?.absoluteString))")
       return finalRerquest
     }
   }

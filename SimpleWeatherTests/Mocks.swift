@@ -92,7 +92,7 @@ public class MapControllerMock: MapViewProtocol
     success?(data)
   }
 
-  public func hideForecastView()
+  public func forecastCallFailed()
   {
     fail?()
   }

@@ -132,6 +132,12 @@ class MapViewController: UIViewController
       // nothing to do here for now
     })
   }
+  
+  private func hideForecastView()
+  {
+    forecastView.alpha = 0.0
+  }
+
 }
 
 extension MapViewController: UITextFieldDelegate
@@ -225,8 +231,13 @@ extension MapViewController: MapViewProtocol
     return attrString
   }
 
-  func hideForecastView()
+  func forecastCallFailed()
   {
-    forecastView.alpha = 0.0
+    hideForecastView()
+    let alertController = UIAlertController(title: "Error", message:
+      "Weather forecast failed for location provided", preferredStyle: UIAlertController.Style.alert)
+    alertController.addAction(UIAlertAction(title: "Close", style: UIAlertAction.Style.default,handler: nil))
+    
+    self.present(alertController, animated: true, completion: nil)
   }
 }

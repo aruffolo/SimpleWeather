@@ -59,7 +59,7 @@ class MapViewModel: NSObject
       guard let d = data
         else
       {
-        self.view?.hideForecastView()
+        self.view?.forecastCallFailed()
         return
       }
       print(d)
@@ -73,7 +73,7 @@ class MapViewModel: NSObject
       guard let d = data
         else
       {
-        self.view?.hideForecastView()
+        self.view?.forecastCallFailed()
         return
       }
       print(d)
