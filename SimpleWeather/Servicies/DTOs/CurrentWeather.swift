@@ -28,7 +28,7 @@ struct CurrentWeather: Codable {
   let weather: [Weather]
   let base: String
   let main: Main
-  let visibility: Int
+  let visibility: Int?
   let wind: Wind?
   let rain: Rain?
   let clouds: Clouds?
@@ -49,7 +49,8 @@ struct Coord: Codable {
 
 struct Main: Codable {
   let temp: Double
-  let pressure, humidity: Int
+  let pressure: Double?
+  let humidity: Int
   let tempMin, tempMax: Double
 
   enum CodingKeys: String, CodingKey {
@@ -60,28 +61,30 @@ struct Main: Codable {
 }
 
 struct Rain: Codable {
-  let the3H: Double
-
+  let the3H: Double?
+  let the1H: Double?
   enum CodingKeys: String, CodingKey {
     case the3H = "3h"
+    case the1H = "1h"
   }
 }
 
 struct Sys: Codable {
-  let type, id: Int
-  let message: Double
-  let country: String
-  let sunrise, sunset: Int
+  let type, id: Int?
+  let message: Double?
+  let country: String?
+  let sunrise, sunset: Int? 
 }
 
 struct Weather: Codable {
   let id: Int?
-  let main, description, icon: String
+  let main: String?
+  let description, icon: String
 }
 
 struct Wind: Codable {
   let speed: Double?
-  let deg: Int?
+  let deg: Double?
 }
 
 func newJSONDecoder() -> JSONDecoder {

@@ -32,7 +32,7 @@ class MapViewModel: NSObject
     manager.requestLocation()
   }
 
-  public func searcLocationRequested(input: String)
+  public func searchLocation(input: String)
   {
     if isCoordinates(input: input)
     {
@@ -82,7 +82,7 @@ class MapViewModel: NSObject
   }
 
   // Here I suppose that coordinate input is valid only if corrdinate numbers have '.' as decimal separator and
-  // ';' as lat and lng separator
+  // ',' as lat and lng separator
   private func isCoordinates(input: String) -> Bool
   {
     let splitted = input.replacingOccurrences(of: " ", with: "").split(separator: Character(coordinateSeparator))

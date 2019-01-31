@@ -56,7 +56,7 @@ class MapViewController: UIViewController
 
   private func setInitialValues()
   {
-    forecastView.isHidden = true
+    forecastView.alpha = 0.0
     let minus = "-"
     cityLabel.text = minus
     forecastLabel.text = minus
@@ -99,7 +99,7 @@ class MapViewController: UIViewController
     {
       if let content = searchViewTextField.text, !content.isEmpty
       {
-        viewModel.searcLocationRequested(input: content)
+        viewModel.searchLocation(input: content)
       }
       searchViewTextField.resignFirstResponder()
       shrinkSearchViewAnim()
@@ -141,7 +141,7 @@ extension MapViewController: UITextFieldDelegate
     shrinkSearchViewAnim()
     if let content = textField.text, !content.isEmpty
     {
-      viewModel.searcLocationRequested(input: content)
+      viewModel.searchLocation(input: content)
       textField.text = ""
     }
     return textField.resignFirstResponder()
@@ -204,7 +204,7 @@ extension MapViewController: MapViewProtocol
   private func animateForcastViewFadeIn()
   {
     UIView.animate(withDuration: 0.4, animations: {
-      self.forecastView.isHidden = false
+      self.forecastView.alpha = 1.0
     })
   }
 
@@ -227,6 +227,6 @@ extension MapViewController: MapViewProtocol
 
   func hideForecastView()
   {
-    forecastView.isHidden = true
+    forecastView.alpha = 0.0
   }
 }

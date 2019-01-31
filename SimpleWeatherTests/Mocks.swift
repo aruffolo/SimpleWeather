@@ -77,6 +77,9 @@ public struct ForeCastDataFailServiceMock: ForecastDataServiceProtocol
 
 public class MapControllerMock: MapViewProtocol
 {
+  var success: ((ForecastViewData) -> Void)?
+  var fail: (() -> Void)?
+  
   var data: ForecastViewData? = nil
 
   public func zoomToLocation(coordinate: CLLocationCoordinate2D)
@@ -86,9 +89,11 @@ public class MapControllerMock: MapViewProtocol
   public func fillForecastData(data: ForecastViewData)
   {
     self.data = data
+    success?(data)
   }
 
   public func hideForecastView()
   {
+    fail?()
   }
 }

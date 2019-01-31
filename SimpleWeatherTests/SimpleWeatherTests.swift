@@ -32,7 +32,7 @@ class SimpleWeatherTests: XCTestCase
       let forecastMock = ForeCastDataServiceMock()
       let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
 
-      vm.searcLocationRequested(input: "San Francisco")
+      vm.searchLocation(input: "San Francisco")
 
       XCTAssert(vcMock.data?.city == "San Francisco")
     }
@@ -43,8 +43,120 @@ class SimpleWeatherTests: XCTestCase
     let forecastMock = ForeCastDataServiceMock()
     let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
 
-    vm.searcLocationRequested(input: "16.19,39.35")
+    vm.searchLocation(input: "16.19,39.35")
     XCTAssert(vcMock.data?.city == "Rende")
+  }
+  
+  func testSuccessAsyncSearchLocationWithLocationName()
+  {
+    let vcMock = MapControllerMock()
+    let forecastMock = ForecastDataService()
+    let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
+    
+    vm.searchLocation(input: "San Francisco")
+    
+    let completedExpectation = expectation(description: "Completed")
+    
+    vcMock.success = { data in
+      completedExpectation.fulfill()
+      XCTAssert(vcMock.data?.city == "San Francisco")
+    }
+    
+    vcMock.fail = {
+      completedExpectation.fulfill()
+      XCTFail("not retrieved data")
+    }
+    
+    waitForExpectations(timeout: 5, handler: { error in
+      if (error != nil)
+      {
+        XCTFail("waitForExpectationsWithTimeout errored: \(String(describing: error))")
+      }
+    })
+  }
+  
+  func testSuccessAsyncSearchLocationWithCoordinate()
+  {
+    let vcMock = MapControllerMock()
+    let forecastMock = ForecastDataService()
+    let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
+    
+    vm.searchLocation(input: "16.19, 39.35")
+    let completedExpectation = expectation(description: "Completed")
+    
+    vcMock.success = { data in
+      completedExpectation.fulfill()
+      XCTAssert(vcMock.data?.city.contains("Zoba") ?? false)
+    }
+    
+    vcMock.fail = {
+      completedExpectation.fulfill()
+      XCTFail("not retrieved data")
+    }
+    
+    waitForExpectations(timeout: 5, handler: { error in
+      if (error != nil)
+      {
+        XCTFail("waitForExpectationsWithTimeout errored: \(String(describing: error))")
+      }
+    })
+  }
+  
+  func testFailAsyncSearchLocationWithCoordinate()
+  {
+    let vcMock = MapControllerMock()
+    let forecastMock = ForecastDataService()
+    let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
+    
+    vm.searchLocation(input: "16%19, 39.35")
+    let completedExpectation = expectation(description: "Completed")
+    
+    vcMock.success = { data in
+      completedExpectation.fulfill()
+      XCTFail("data should have not been retrieved")
+    }
+    
+    vcMock.fail = {
+      completedExpectation.fulfill()
+      // it's true because in this case the call must fail
+      XCTAssert(true)
+    }
+    
+    waitForExpectations(timeout: 5, handler: { error in
+      if (error != nil)
+      {
+        XCTFail("waitForExpectationsWithTimeout errored: \(String(describing: error))")
+      }
+    })
+  }
+  
+  func testFailAsyncSearchLocationWithLocationName()
+  {
+    let vcMock = MapControllerMock()
+    let forecastMock = ForecastDataService()
+    let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
+    
+    vm.searchLocation(input: "anonamethasshouldfaillocationfinding")
+    
+    let completedExpectation = expectation(description: "Completed")
+    
+    vcMock.success = { data in
+      completedExpectation.fulfill()
+      XCTFail("data should have not been retrieved")
+    }
+    
+    vcMock.fail = {
+      completedExpectation.fulfill()
+      // it's true because in this case the call must fail
+      XCTAssert(true)
+    }
+    
+    waitForExpectations(timeout: 5, handler: { error in
+      if (error != nil)
+      {
+        XCTFail("waitForExpectationsWithTimeout errored: \(String(describing: error))")
+      }
+    })
   }
 
   func testSearchLocationWithLocationNameFail()
@@ -53,7 +165,7 @@ class SimpleWeatherTests: XCTestCase
     let forecastMock = ForeCastDataFailServiceMock()
     let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
 
-    vm.searcLocationRequested(input: "San Francisco")
+    vm.searchLocation(input: "San Francisco")
 
     XCTAssert(vcMock.data == nil)
   }
@@ -64,16 +176,7 @@ class SimpleWeatherTests: XCTestCase
     let forecastMock = ForeCastDataFailServiceMock()
     let vm = MapViewModel(view: vcMock, forecastDataService: forecastMock)
 
-    vm.searcLocationRequested(input: "16.19,39.35")
+    vm.searchLocation(input: "16.19,39.35")
     XCTAssert(vcMock.data == nil)
   }
-
-    func testPerformanceExample()
-    {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
