@@ -13,8 +13,7 @@ extension NSLayoutConstraint
 {
   func changeMultiplier(_ multiplier: CGFloat) -> NSLayoutConstraint
   {
-    let ar = [ self ]
-    NSLayoutConstraint.deactivate(ar)
+    NSLayoutConstraint.deactivate([self])
 
     let newConstraint = NSLayoutConstraint.init(item: firstItem as Any,
                                                 attribute: firstAttribute,
@@ -28,8 +27,7 @@ extension NSLayoutConstraint
     newConstraint.shouldBeArchived = shouldBeArchived
     newConstraint.identifier = identifier
 
-    let ar2 = [ newConstraint ]
-    NSLayoutConstraint.activate(ar2)
+    NSLayoutConstraint.activate([ newConstraint ])
 
     return newConstraint
   }

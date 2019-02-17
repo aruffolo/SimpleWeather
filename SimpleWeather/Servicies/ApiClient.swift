@@ -12,21 +12,22 @@ class ApiClient
 {
   static func currentWeather(lat: String, lng: String, completion: @escaping (Result<CurrentWeather>) -> Void)
   {
-    AF.request(ApiRouter.weatherCoordinate(lat: lat, lng: lng)).responseData(completionHandler: { response in
-      printReposne(response: response)
-      let decoder = JSONDecoder()
-      let currentWeather: Result<CurrentWeather> = decoder.decodeResponse(from: response)
-      completion(currentWeather)
-    })
+    request(ApiRouter.weatherCoordinate(lat: lat, lng: lng), completion: completion)
   }
 
   static func currentWeather(location: String, completion: @escaping (Result<CurrentWeather>) -> Void)
   {
-    AF.request(ApiRouter.weatherName(name: location)).responseData(completionHandler: { response in
-      printReposne(response: response)
+    request(ApiRouter.weatherName(name: location), completion: completion)
+  }
+
+  private static func request<T: Codable> (_ urlConvertible: URLRequestConvertible,
+                                           completion: @escaping (Result<T>) -> Void)
+  {
+    AF.request(urlConvertible).responseData(completionHandler:{ (dataResponse: DataResponse<Data>) in
+      printReposne(response: dataResponse)
       let decoder = JSONDecoder()
-      let currentWeather: Result<CurrentWeather> = decoder.decodeResponse(from: response)
-      completion(currentWeather)
+      let response: Result<T> = decoder.decodeResponse(from: dataResponse)
+      completion(response)
     })
   }
   
