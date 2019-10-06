@@ -12,12 +12,14 @@ class ApiClient
 {
   static func currentWeather(lat: String, lng: String, completion: @escaping (Result<CurrentWeather>) -> Void)
   {
-    request(ApiRouter.weatherCoordinate(lat: lat, lng: lng), completion: completion)
+    let coordinateRequest = CoordinateRequest(lat: lat, lng: lng)
+    request(ApiRouter.weatherCoordinate(coordinateRequest: coordinateRequest), completion: completion)
   }
 
   static func currentWeather(location: String, completion: @escaping (Result<CurrentWeather>) -> Void)
   {
-    request(ApiRouter.weatherName(name: location), completion: completion)
+    let locationRequest = LocationRequest(name: location)
+    request(ApiRouter.weatherName(locationRequest: locationRequest), completion: completion)
   }
 
   private static func request<T: Codable> (_ urlConvertible: URLRequestConvertible,

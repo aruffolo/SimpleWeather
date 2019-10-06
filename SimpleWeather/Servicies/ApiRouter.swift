@@ -16,17 +16,17 @@ enum Constants
   static let measureUnitValue = "metric"
 }
 
-public enum ApiRouter: URLRequestConvertible
+enum ApiRouter: URLRequestConvertible
 {
-  case weatherCoordinate(lat: String, lng: String)
-  case weatherName(name: String)
+  case weatherCoordinate(coordinateRequest: CoordinateRequest)
+  case weatherName(locationRequest: LocationRequest)
   
   var method: HTTPMethod
   {
     switch self
     {
-    case .weatherCoordinate( _, _),
-         .weatherName(_):
+    case .weatherCoordinate,
+         .weatherName:
       return .get
     }
   }
@@ -35,22 +35,22 @@ public enum ApiRouter: URLRequestConvertible
   {
     switch self
     {
-    case .weatherCoordinate(_,_),
-         .weatherName(_):
+    case .weatherCoordinate,
+         .weatherName:
       return "/weather"
     }
   }
   
-  var parameters: Parameters? 
-  {
-    switch self
-    {
-    case .weatherCoordinate(let lat, let lng):
-      return [APIParameterKey.lat: lat, APIParameterKey.lng: lng, APIParameterKey.appId: Constants.apiKey, "units": "metric"]
-    case .weatherName(let name):
-      return [APIParameterKey.q: name, APIParameterKey.appId: Constants.apiKey, APIParameterKey.measureUnit: Constants.measureUnitValue]
-    }
-  }
+//  var parameters: Parameters?
+//  {
+//    switch self
+//    {
+//    case .weatherCoordinate(let lat, let lng):
+//      return [APIParameterKey.lat: lat, APIParameterKey.lng: lng, APIParameterKey.appId: Constants.apiKey, "units": "metric"]
+//    case .weatherName(let name):
+//      return [APIParameterKey.q: name, APIParameterKey.appId: Constants.apiKey, APIParameterKey.measureUnit: Constants.measureUnitValue]
+//    }
+//  }
   
   var encoding: ParameterEncoding
   {
@@ -76,24 +76,36 @@ public enum ApiRouter: URLRequestConvertible
     
     if method == .post
     {
-      if let parameters = parameters
-      {
+        let codable: Any = getConcreateCodables()
         do
         {
-          urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+          urlRequest.httpBody = try JSONSerialization.data(withJSONObject: codable, options: .prettyPrinted)
         }
         catch
         {
           throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
         }
-      }
       return urlRequest
     }
     else
     {
-      let finalRerquest = try encoding.encode(urlRequest, with: parameters)
-      print("GET request url\n: \(String(describing: finalRerquest.url?.absoluteString))")
-      return finalRerquest
+      switch self {
+      case .weatherCoordinate(let coordinateRequest):
+         urlRequest = try URLEncodedFormParameterEncoder.default.encode(coordinateRequest, into: urlRequest)
+      case .weatherName(let locationRequest):
+         urlRequest = try URLEncodedFormParameterEncoder.default.encode(locationRequest, into: urlRequest)
+      }
+      print("GET request url\n: \(String(describing: urlRequest.url?.absoluteString))")
+      return urlRequest
+    }
+  }
+
+  private func getConcreateCodables() -> Any {
+    switch self {
+    case .weatherCoordinate(let coordinateReques):
+      return coordinateReques
+    case .weatherName(let locationRequest):
+      return locationRequest
     }
   }
 }
